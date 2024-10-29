@@ -13,6 +13,7 @@
     </RestoreAdditionalProjectSources>
     <RootNamespace>COM3D2.ShapekeyMaster.Plugin</RootNamespace>
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
@@ -32,8 +33,21 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  
+
   <ItemGroup>
+    <Compile Include="GUI\UIUserOverrides.cs" />
+    <Compile Include="ShapeKeyBlacklist.cs" />
+    <Compile Include="ShapeKeyUpdate.cs" />
+    <Compile Include="CategorySlotHandler.cs" />
+    <Compile Include="TranslationResource.cs" />
+    <Compile Include="HarmonyPatchers.cs" />
+    <Compile Include="Toolbox.cs" />
+    <Compile Include="GUI\UIToolbox.cs" />
+    <Compile Include="ShapeKeyDatabase.cs" />
+    <Compile Include="ShapeKeyEntry.cs" />
+    <Compile Include="GUI\UI.cs" />
+    <Compile Include="ShapeKeyMaster.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
   </ItemGroup>
 
@@ -42,7 +56,9 @@
     <PackageReference Include="COM3D2.GameLibs" Version="2.39.0-r.0" />
     <PackageReference Include="HarmonyX" Version="2.13.0" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
-    <PackageReference Include="UnityEngine.Modules" Version="5.6.3" IncludeAssets="compile" />
+    <PackageReference Include="UnityEngine.Modules" Version="5.6.3"/>
+    <PackageReference Include="MonoMod.Backports" Version="1.1.2" />
+    <PackageReference Include="MonoMod.ILHelpers" Version="1.1.0" />
     <Reference Include="COM3D2.API">
       <HintPath>..\libs\COM3D2.API.1.0.0\COM3D2.API.dll</HintPath>
     </Reference>
