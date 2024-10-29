@@ -126,9 +126,10 @@ namespace ShapeKeyMaster
 #if (DEBUG)
 					ShapeKeyMaster.pluginLogger.LogDebug($"Applying Conditional State @ {__instance.bodyskin.body.maid.status.fullNameJpStyle} :: {__instance.Category} ::: {shapeKeyEntry.EntryName} :::: {shapeKeyEntry.ShapeKey}");
 #endif
-
-					__instance.BlendValues[index] = shapeKeyEntry.DisabledDeform / 100;
-					__instance.BlendValuesBackup[index] = shapeKeyEntry.DisabledDeform / 100;
+					// When the condition is not met, skip the processing of shapekey, so other programs can use this shape key
+					continue;
+					// __instance.BlendValues[index] = shapeKeyEntry.DisabledDeform / 100;
+					// __instance.BlendValuesBackup[index] = shapeKeyEntry.DisabledDeform / 100;
 				}
 				else if (shapeKeyEntry.AnimateWithExcitement && YotogiLvls.Contains(SceneManager.GetActiveScene().name))
 				{
