@@ -143,7 +143,14 @@ namespace ShapeKeyMaster
                         __instance.BlendValuesBackup[index] = shapeKeyEntry.DisabledDeform / 100;
 
 
-                        ignoreFlag[shapeKeyEntry] = true;
+                        // Check if values are approximately equal, because sometimes there will be problems with values not being applied
+                        bool isBlendValueEqual = Math.Abs(__instance.BlendValues[index] - (shapeKeyEntry.DisabledDeform / 100)) < 0.01;
+                        bool isBlendBackupEqual = Math.Abs(__instance.BlendValuesBackup[index] - (shapeKeyEntry.DisabledDeform / 100)) < 0.01;
+
+                        if (isBlendValueEqual && isBlendBackupEqual)
+                        {
+                            ignoreFlag[shapeKeyEntry] = true;
+                        }
                     }
                     else
                     {
