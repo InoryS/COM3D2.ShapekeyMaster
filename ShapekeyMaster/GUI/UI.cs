@@ -177,7 +177,7 @@ namespace ShapeKeyMaster.GUI
 				WindowRect.y = uiPosY;
 				WindowRect.x = uiPosX;
 
-				ShapeKeyMaster.pluginLogger.LogDebug($"Changing sizes of SKM UI to {WindowRect.width} x {WindowRect.height}");
+				ShapeKeyMaster.PluginLogger.LogDebug($"Changing sizes of SKM UI to {WindowRect.width} x {WindowRect.height}");
 
 				_currentHeight = Screen.height;
 				_currentWidth = Screen.width;
@@ -446,18 +446,63 @@ namespace ShapeKeyMaster.GUI
 			}
 
 			GUILayout.BeginHorizontal(_sections2);
+			//To Beginning
 			if (GUILayout.Button("<<"))
 			{
-				_page = Math.Max(_page - ShapeKeyMaster.EntriesPerPage.Value, 0);
+				_page = 0;
+			}
+			if (GUILayout.Button(" < "))
+			{
+				if (_page - ShapeKeyMaster.EntriesPerPage.Value >= 0)
+				{
+					_page -= ShapeKeyMaster.EntriesPerPage.Value;
+				}
+				//Past first shapekey, wrap to end
+				else
+				{
+					if (applicantCount == 0)
+					{
+						_page = 0;
+					}
+					else if (applicantCount % ShapeKeyMaster.EntriesPerPage.Value == 0)
+					{
+						_page = applicantCount - ShapeKeyMaster.EntriesPerPage.Value;
+					}
+                    else
+					{
+						_page = applicantCount - (applicantCount % ShapeKeyMaster.EntriesPerPage.Value);
+					}
+				}
 			}
 			GUILayout.FlexibleSpace();
 			BuildPageManagerLabel(headerString, applicantCount);
 			GUILayout.FlexibleSpace();
-			if (GUILayout.Button(">>"))
+			if (GUILayout.Button(" > "))
 			{
 				if (_page + ShapeKeyMaster.EntriesPerPage.Value < applicantCount)
 				{
 					_page += ShapeKeyMaster.EntriesPerPage.Value;
+				}
+				//Past last shapekey, wrap to beginning
+				else
+				{
+					_page = 0;
+				}
+			}
+			//To End
+			if (GUILayout.Button(">>"))
+			{
+				if (applicantCount == 0)
+				{
+					_page = 0;
+				}
+				else if (applicantCount % ShapeKeyMaster.EntriesPerPage.Value == 0)
+				{
+					_page = applicantCount - ShapeKeyMaster.EntriesPerPage.Value;
+				}
+				else
+				{
+					_page = applicantCount - (applicantCount % ShapeKeyMaster.EntriesPerPage.Value);
 				}
 			}
 			GUILayout.EndHorizontal();
@@ -568,7 +613,7 @@ namespace ShapeKeyMaster.GUI
 					var keysToCopy = SkDatabase.ShapeKeysByMaid(maidWithKey).Values;
 					var newKeys = keysToCopy.Select(r => r.Clone() as ShapeKeyEntry).ToDictionary(r => r.Id, m => m);
 
-					ShapeKeyMaster.pluginLogger.LogInfo($"Key count {newKeys.Count}");
+					ShapeKeyMaster.PluginLogger.LogInfo($"Key count {newKeys.Count}");
 
 					var rand = new Random();
 					string tempMaidGroupName;
@@ -1516,7 +1561,7 @@ namespace ShapeKeyMaster.GUI
 
 			if (ShapeKeyMaster.HideInactiveMaids.Value == false && GUILayout.Button(ShapeKeyMaster.CurrentLanguage["all"]))
 			{
-				ShapeKeyMaster.pluginLogger.LogMessage(ShapeKeyMaster.CurrentLanguage["exportingAll"]);
+				ShapeKeyMaster.PluginLogger.LogMessage(ShapeKeyMaster.CurrentLanguage["exportingAll"]);
 
 				ShapeKeyMaster.SaveToJson(null, SkDatabase, true);
 			}
