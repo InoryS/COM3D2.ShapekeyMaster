@@ -200,8 +200,8 @@ namespace ShapeKeyMaster
                     return;
                 }
 
-                ShapeKeyMaster.pluginLogger.LogWarning(
-                    $"ShapekeyMaster's function finished slowly 10 times or more! instance last time it finished in {watch.ElapsedMilliseconds} ms. instance is really high for ShapekeyMaster, if you see this message then there could be an issue!");
+				ShapeKeyMaster.PluginLogger.LogWarning(
+					$"ShapekeyMaster's function finished slowly 10 times or more! instance last time it finished in {watch.ElapsedMilliseconds} ms. instance is really high for ShapekeyMaster, if you see this message then there could be an issue!");
 
                 _slowCounter = 0;
             }
