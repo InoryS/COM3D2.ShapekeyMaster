@@ -1,3 +1,16 @@
+Custom fork
+
+Allows to skip Shapekey processing when the condition is not met when ShapeKey condition is enabled, so that other plugins can use it.
+
+For example, when vibe is equipped, I want kupa to be applied automatically (use ShapeKey condition), but when it is not equipped, I want other plugins to use kupa shapekey, like yotogi auto kupa.
+
+<br>
+<br>
+<br>
+<br>
+
+
+
 # COM3D2.ShapekeyMaster
 A ShapeAnimator replacement coded for BepinEx with extended functionality and a sharp focus on performance.
 
