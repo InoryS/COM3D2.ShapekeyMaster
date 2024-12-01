@@ -138,6 +138,7 @@ namespace ShapeKeyMaster.GUI
 				};
 
 				EntryComparer.Mode = ConvertDefaultSortMethod(ShapeKeyMaster.DefaultSortingMethod.Value);
+				_tabSelection = ConvertDefaultTabSelection(ShapeKeyMaster.DefaultTabSelection.Value);
 
 				_runOnce = false;
 			}
@@ -1362,7 +1363,14 @@ namespace ShapeKeyMaster.GUI
 		{
 			DisplaySearchMenu(true);
 
+			ShapeKeyMaster.HideInactiveMaids.Value = GUILayout.Toggle(ShapeKeyMaster.HideInactiveMaids.Value, ShapeKeyMaster.CurrentLanguage["hideInactiveMaids"]);
+
 			GUILayout.Label(ShapeKeyMaster.CurrentLanguage["selectNewMaidGroup"]);
+
+			if (GUILayout.Button(ShapeKeyMaster.CurrentLanguage["cancel"]))
+			{
+				_maidGroupCreateOpen = false;
+			}
 
 			if (GUILayout.Button(ShapeKeyMaster.CurrentLanguage["none"]))
 			{
@@ -1387,6 +1395,11 @@ namespace ShapeKeyMaster.GUI
 
 			foreach (var mn in _maidNameList)
 			{
+				if (ShapeKeyMaster.HideInactiveMaids.Value && !Extensions.IsMaidActive(mn))
+				{
+					continue;
+				}
+
 				if (_filter != "")
 				{
 					if (mn.Contains(_filter, StringComparison.OrdinalIgnoreCase) == false)
@@ -1540,6 +1553,8 @@ namespace ShapeKeyMaster.GUI
 		{
 			DisplaySearchMenu(true);
 
+			ShapeKeyMaster.HideInactiveMaids.Value = GUILayout.Toggle(ShapeKeyMaster.HideInactiveMaids.Value, ShapeKeyMaster.CurrentLanguage["hideInactiveMaids"]);
+
 			GUILayout.Label($"{ShapeKeyMaster.CurrentLanguage["renamingMaidGroup"]}: {s}");
 
 			GUILayout.BeginHorizontal();
@@ -1563,10 +1578,21 @@ namespace ShapeKeyMaster.GUI
 
 			GUILayout.EndHorizontal();
 
+			if (GUILayout.Button(ShapeKeyMaster.CurrentLanguage["cancel"]))
+			{
+				_maidGroupRename = "";
+				_maidGroupRenameMenu = "";
+			}
+
 			_scrollPosition_MaidRenameMenu = GUILayout.BeginScrollView(_scrollPosition_MaidRenameMenu);
 
 			foreach (var mn in _maidNameList)
 			{
+				if (ShapeKeyMaster.HideInactiveMaids.Value && !Extensions.IsMaidActive(mn))
+				{
+					continue;
+				}
+
 				if (_filter != "")
 				{
 					if (mn.Contains(_filter, StringComparison.OrdinalIgnoreCase) == false)
@@ -1758,6 +1784,21 @@ namespace ShapeKeyMaster.GUI
 				case "Order Number":
 					return 4;
 				default: 
+					return 0;
+			}
+		}
+
+		private static int ConvertDefaultTabSelection(string tabSelStr)
+		{
+			switch (tabSelStr)
+			{
+				case "All":
+					return 0;
+				case "Globals":
+					return 1;
+				case "Maids":
+					return 2;
+				default:
 					return 0;
 			}
 		}
