@@ -49,6 +49,9 @@
     <Compile Include="ShapeKeyMaster.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <None Include="packages.config" />
+    <None Include="Translations\ChineseSimplified.json" />
+    <None Include="Translations\english.json" />
+    <None Include="Translations\espanol.json" />
   </ItemGroup>
 
   <ItemGroup>
