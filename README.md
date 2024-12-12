@@ -4,6 +4,7 @@ Allows to skip Shapekey processing when the condition is not met when ShapeKey c
 
 For example, when vibe is equipped, I want kupa to be applied automatically (use ShapeKey condition), but when it is not equipped, I want other plugins to use kupa shapekey, like yotogi auto kupa.
 
+If you want, download in https://github.com/InoryS/COM3D2.ShapekeyMaster/actions
 <br>
 <br>
 <br>
