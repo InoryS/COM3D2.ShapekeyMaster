@@ -19,8 +19,8 @@ using UnityEngine;
 
 namespace ShapeKeyMaster
 {
-	[BepInPlugin("ShapeKeyMaster", "ShapeKeyMaster", "1.7")]
-	[BepInDependency("deathweasel.com3d2.api")]
+	[BepInPlugin("org.krypto5863.com3d2.shapekeymaster", "ShapeKeyMaster", "1.7.1")]
+	[BepInDependency(Plugin.PluginGUID)]
 	public class ShapeKeyMaster : BaseUnityPlugin
 	{
 		internal static ShapeKeyMaster Instance { get; private set; }
