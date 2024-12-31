@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace ShapeKeyMaster
 {
@@ -83,11 +84,18 @@ namespace ShapeKeyMaster
 #if (DEBUG)
 					ShapeKeyMaster.pluginLogger.LogDebug($"Checking {menu}");
 #endif
+					// support for * wildcard
+					string pattern = menu.Contains("*")
+						? "^" + Regex.Escape(menu).Replace("\\*", ".*") + "$"
+						: Regex.Escape(menu);
+
+					Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
 					var bodySkins = maid.body0
 						.FetchGoSlot()
-						.Select(tbody => tbody)
-						.Where(str => str.m_mp != null && str.m_mp.strFileName.Contains(menu, StringComparison.OrdinalIgnoreCase))
+						.Where(slot => slot?.m_mp?.strFileName != null && regex.IsMatch(slot.m_mp.strFileName))
 						.ToArray();
+
 
 					if (!bodySkins.Any())
 					{
@@ -127,10 +135,18 @@ namespace ShapeKeyMaster
 #if (DEBUG)
 				ShapeKeyMaster.pluginLogger.LogDebug($"Checking {menu}");
 #endif
+				// support for * wildcard
+				string pattern = menu.Contains("*")
+					? "^" + Regex.Escape(menu).Replace("\\*", ".*") + "$"
+					: Regex.Escape(menu);
+
+				Regex regex = new Regex(pattern, RegexOptions.IgnoreCase);
+
 				var bodySkins = maid.body0
 					.FetchGoSlot()
-					.Select(tbody => tbody)
-					.Where(str => str.m_mp != null && str.m_mp.strFileName.Contains(menu, StringComparison.OrdinalIgnoreCase));
+					.Where(slot => slot?.m_mp?.strFileName != null && regex.IsMatch(slot.m_mp.strFileName))
+					.ToArray();
+
 
 				if (bodySkins.Any(skin => maid.body0.GetMask(skin.SlotId)))
 				{
