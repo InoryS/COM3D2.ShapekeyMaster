@@ -45,6 +45,8 @@ namespace ShapeKeyMaster
 
 		internal static bool CheckIfSlotDisableApplies(ShapeKeyEntry entry, Maid maid)
 		{
+			var allSlots = (DisableWhenEquipped[])Enum.GetValues(typeof(DisableWhenEquipped));
+
 #if (DEBUG)
 			ShapeKeyMaster.pluginLogger.LogDebug("Running slot check...");
 #endif
@@ -55,7 +57,7 @@ namespace ShapeKeyMaster
 				ShapeKeyMaster.pluginLogger.LogDebug("WhenAll");
 #endif
 				//When all is equipped disable key
-				foreach (var slot in Enum.GetValues(typeof(DisableWhenEquipped)).Cast<DisableWhenEquipped>())
+				foreach (var slot in allSlots)
 				{
 #if (DEBUG)
 					ShapeKeyMaster.pluginLogger.LogDebug($"Checking {slot}");
@@ -93,9 +95,9 @@ namespace ShapeKeyMaster
 
 					var bodySkins = maid.body0
 						.FetchGoSlot()
+						.Select(tbody => tbody)
 						.Where(slot => slot?.m_mp?.strFileName != null && regex.IsMatch(slot.m_mp.strFileName))
 						.ToArray();
-
 
 					if (!bodySkins.Any())
 					{
@@ -115,7 +117,7 @@ namespace ShapeKeyMaster
 #endif
 
 			//When any is equipped disable key
-			foreach (var slot in Enum.GetValues(typeof(DisableWhenEquipped)).Cast<DisableWhenEquipped>())
+			foreach (var slot in allSlots)
 			{
 #if (DEBUG)
 				ShapeKeyMaster.pluginLogger.LogDebug($"Checking {slot}");
@@ -144,6 +146,7 @@ namespace ShapeKeyMaster
 
 				var bodySkins = maid.body0
 					.FetchGoSlot()
+					.Select(tbody => tbody)
 					.Where(slot => slot?.m_mp?.strFileName != null && regex.IsMatch(slot.m_mp.strFileName))
 					.ToArray();
 
